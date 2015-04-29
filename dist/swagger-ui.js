@@ -2137,7 +2137,10 @@ SwaggerSpecConverter.prototype.declaration = function(obj, swagger) {
     var p = obj.basePath.substring('http://'.length);
     var pos = p.indexOf('/');
     if(pos > 0) {
-      swagger.host = p.substring(0, pos);
+      var host = p.substring(0, pos);
+      if(host != 'localhost') {
+          swagger.host = host;
+      }
       swagger.basePath = p.substring(pos);
     }
     else{

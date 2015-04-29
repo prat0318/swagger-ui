@@ -7,6 +7,14 @@ Swagger UI is part of the Swagger project.  The Swagger project allows you to pr
 Swagger UI is a dependency-free collection of HTML, Javascript, and CSS assets that dynamically
 generate beautiful documentation and sandbox from a Swagger-compliant API. Because Swagger UI has no dependencies, you can host it in any server environment, or on your local machine.
 
+
+## Quick Start
+```
+docker build -t swagger-ui-builder .
+docker run -i -t -p 8082:80 -v /nail/srv/configs/swagger.yaml:/nail/srv/configs/swagger.yaml -v /nail/etc/services:/nail/etc/services --name swagger-ui swagger-ui-builder
+
+```
+
 ## What's Swagger?
 
 The goal of Swagger™ is to define a standard, language-agnostic interface to REST APIs which allows both humans and computers to discover and understand the capabilities of the service without access to source code, documentation, or through network traffic inspection. When properly defined via Swagger, a consumer can understand and interact with the remote service with a minimal amount of implementation logic. Similar to what interfaces have done for lower-level programming, Swagger removes the guesswork in calling the service.

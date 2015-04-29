@@ -1,0 +1,3 @@
+PATH=/usr/local/nginx/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+* * * * * root DOCKERHOST=$(/sbin/ip route|awk '/default/ { print $3 }') python /build/configure_swagger.py >> /var/log/cron.log 2>&1
+

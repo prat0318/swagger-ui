@@ -22,12 +22,34 @@
 
   <script type="text/javascript">
     $(function () {
+      $.ajax({
+        url: "services.json",
+        async: false,
+        dataType: "json",
+        success: function(jsonData){
+          cb = '';
+          $.each(jsonData, function(i,data){
+            cb+='<option value="'+data.path+'">'+data.name+'</option>';
+          });
+          $("#input_baseUrl").append(cb);
+        }
+      })
+    })
+
+    $(function(){
+      $("#input_baseUrl").change(function(){
+          document.location.href = location.protocol + '//' + location.host + location.pathname + '?url=' + this.value
+      });
+    });
+
+    $(function () {
       var url = window.location.search.match(/url=([^&]+)/);
       if (url && url.length > 1) {
         url = decodeURIComponent(url[1]);
       } else {
-        url = "http://petstore.swagger.io/v2/swagger.json";
+        url = $('#input_baseUrl')[0].options[0].value;
       }
+
       window.swaggerUi = new SwaggerUi({
         url: url,
         dom_id: "swagger-ui-container",
@@ -81,6 +103,14 @@
           console.log.apply(console, arguments);
         }
       }
+
+    $("#input_baseUrl option").each(function(i){
+      opt = $(this)[0];
+      if(opt.value === url) {
+        opt.selected = true;
+        return false;
+      }
+    });
   });
   </script>
 </head>
@@ -88,11 +118,13 @@
 <body class="swagger-section">
 <div id='header'>
   <div class="swagger-ui-wrap">
-    <a id="logo" href="http://swagger.io">swagger</a>
+    <a id="logo" href="http://y/swagger">y/swagger</a>
     <form id='api_selector'>
-      <div class='input'><input placeholder="http://example.com/api" id="input_baseUrl" name="baseUrl" type="text"/></div>
-      <div class='input'><input placeholder="api_key" id="input_apiKey" name="apiKey" type="text"/></div>
-      <div class='input'><a id="explore" href="#">Explore</a></div>
+      <div class='input'>
+        <select name="baseUrl" id="input_baseUrl"></select>
+        <div class='input'><input placeholder="http://example.com/api" id="input_baseUrl" name="baseUrl" type="text" style="display: none;"/></div>
+        <div class='input'><input placeholder="api_key" id="input_apiKey" name="apiKey" type="text" style="display: none;"/></div>
+      </div>
     </form>
   </div>
 </div>
